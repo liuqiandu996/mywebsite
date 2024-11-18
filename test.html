@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数独游戏</title>
+  <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background: #f0f2f5;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .grid-container {
+            width: 100%;
+            padding-bottom: 100%;
+            position: relative;
+            border: 1px solid #333;
+        }
+
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            gap: 1px;
+            background: #333;
+        }
+
+        .cell {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 16px;
+            background: white;
+            padding: 0;
+        }
+
+        @media (min-width: 400px) {
+            .cell {
+                font-size: 20px;
+            }
+        }
+
+        .cell::-webkit-inner-spin-button,
+        .cell::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .cell[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* 调整边框样式 */
+        .cell:nth-child(3n):not(:nth-child(9n)) {
+            border-right: 2px solid #333;
+        }
+
+        .grid > input:nth-child(n+19):nth-child(-n+27),
+        .grid > input:nth-child(n+46):nth-child(-n+54) {
+            border-bottom: 2px solid #333;
+        }
+
+        .cell[readonly] {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .cell.error {
+            color: red;
+            background: #ffe6e6;
+        }
+
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+            background: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            min-width: 80px;
+            font-size: 14px;
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 80px;
+            font-size: 14px;
+        }
+
+        .timer {
+            font-size: 20px;
+            font-family: monospace;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            min-width: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+<!-- HTML部分保持不变 -->
+<body>
+<div class="container">
+  <div class="controls">
+    <select id="difficulty">
+      <option value="easy">简单</option>
+      <option value="medium">中等</option>
+      <option value="hard">困难</option>
+    </select>
+    <button id="newGame">新游戏</button>
+    <button id="undo" disabled>撤销</button>
+    <span class="timer" id="timer">00:00</span>
+  </div>
+  <div class="grid-container">
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<!-- JavaScript代码保持不变 -->
+<script>
+    class SudokuGame {
+        constructor() {
+            this.grid = Array(9).fill().map(() => Array(9).fill(0));
+            this.solution = Array(9).fill().map(() => Array(9).fill(0));
+            this.initialGrid = null;
+            this.history = [];
+            this.timer = 0;
+            this.timerInterval = null;
+
+            this.initializeUI();
+            this.newGame();
+        }
+
+        initializeUI() {
+            const gridElement = document.getElementById('grid');
+            gridElement.innerHTML = '';
+
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.min = 1;
+                    input.max = 9;
+                    input.className = 'cell';
+                    input.dataset.row = i;
+                    input.dataset.col = j;
+
+                    input.addEventListener('input', (e) => {
+                        this.handleInput(i, j, e.target.value);
+                        e.target.value = e.target.value.slice(0, 1);
+                    });
+
+                    gridElement.appendChild(input);
+                }
+            }
+
+            document.getElementById('newGame').addEventListener('click', () => this.newGame());
+            document.getElementById('undo').addEventListener('click', () => this.undo());
+            document.getElementById('difficulty').addEventListener('change', () => this.newGame());
+        }
+
+        generateSolution() {
+            const shuffle = arr => {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            };
+
+            const isValid = (grid, row, col, num) => {
+                for (let x = 0; x < 9; x++) {
+                    if (grid[row][x] === num) return false;
+                }
+                for (let x = 0; x < 9; x++) {
+                    if (grid[x][col] === num) return false;
+                }
+                let startRow = Math.floor(row / 3) * 3;
+                let startCol = Math.floor(col / 3) * 3;
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        if (grid[i + startRow][j + startCol] === num) return false;
+                    }
+                }
+                return true;
+            };
+
+            const solve = (grid) => {
+                for (let row = 0; row < 9; row++) {
+                    for (let col = 0; col < 9; col++) {
+                        if (grid[row][col] === 0) {
+                            for (let num = 1; num <= 9; num++) {
+                                if (isValid(grid, row, col, num)) {
+                                    grid[row][col] = num;
+                                    if (solve(grid)) return true;
+                                    grid[row][col] = 0;
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+
+            this.solution = Array(9).fill().map(() => Array(9).fill(0));
+            solve(this.solution);
+            return this.solution;
+        }
+
+        createPuzzle() {
+            const difficulties = {
+                easy: 40,
+                medium: 50,
+                hard: 60
+            };
+
+            const difficulty = document.getElementById('difficulty').value;
+            const cells = difficulties[difficulty];
+            const puzzle = this.solution.map(row => [...row]);
+
+            for (let i = 0; i < cells; i++) {
+                let row, col;
+                do {
+                    row = Math.floor(Math.random() * 9);
+                    col = Math.floor(Math.random() * 9);
+                } while (puzzle[row][col] === 0);
+                puzzle[row][col] = 0;
+            }
+
+            return puzzle;
+        }
+
+        handleInput(row, col, value) {
+            if (this.initialGrid[row][col] !== 0) return;
+
+            const oldValue = this.grid[row][col];
+            const newValue = value === '' ? 0 : parseInt(value);
+
+            if (isNaN(newValue) || newValue < 0 || newValue > 9) return;
+
+            this.history.push({
+                row,
+                col,
+                oldValue
+            });
+
+            this.grid[row][col] = newValue;
+            document.getElementById('undo').disabled = false;
+
+            this.updateCell(row, col);
+            this.checkWin();
+        }
+
+        updateCell(row, col) {
+            const input = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            const value = this.grid[row][col];
+
+            input.value = value || '';
+            input.classList.toggle('error', value !== 0 && value !== this.solution[row][col]);
+            input.readOnly = this.initialGrid[row][col] !== 0;
+        }
+
+        undo() {
+            if (this.history.length === 0) return;
+
+            const move = this.history.pop();
+            this.grid[move.row][move.col] = move.oldValue;
+            this.updateCell(move.row, move.col);
+
+            document.getElementById('undo').disabled = this.history.length === 0;
+        }
+
+        updateTimer() {
+            const mins = Math.floor(this.timer / 60).toString().padStart(2, '0');
+            const secs = (this.timer % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${mins}:${secs}`;
+        }
+
+        newGame() {
+            if (this.timerInterval) clearInterval(this.timerInterval);
+
+            this.timer = 0;
+            this.updateTimer();
+            this.timerInterval = setInterval(() => {
+                this.timer++;
+                this.updateTimer();
+            }, 1000);
+
+            this.generateSolution();
+            this.grid = this.createPuzzle();
+            this.initialGrid = this.grid.map(row => [...row]);
+            this.history = [];
+            document.getElementById('undo').disabled = true;
+
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    this.updateCell(i, j);
+                }
+            }
+        }
+
+        checkWin() {
+            const isComplete = this.grid.every((row, i) =>
+                row.every((cell, j) => cell === this.solution[i][j])
+            );
+
+            if (isComplete) {
+                clearInterval(this.timerInterval);
+                setTimeout(() => {
+                    alert(`恭喜！你完成了数独！用时：${document.getElementById('timer').textContent}`);
+                }, 100);
+            }
+        }
+    }
+
+    new SudokuGame();
+</script>
+</body>
+</html>

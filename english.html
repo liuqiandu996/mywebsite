@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语单词学习</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5sortable/0.13.3/html5sortable.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+<div class="container mx-auto px-4 py-8">
+    <!-- 标题部分 -->
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">英语单词学习助手</h1>
+        <p class="text-gray-600">当前词库：<span id="wordCount" class="font-bold">0</span> 个单词</p>
+    </div>
+
+    <!-- 添加新单词表单 -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">添加新单词</h2>
+        <form id="addWordForm" class="space-y-4">
+            <div class="flex space-x-4">
+                <input type="text" id="wordInput" placeholder="英语单词"
+                       class="flex-1 p-2 border rounded focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                <input type="text" id="meaningInput" placeholder="中文含义"
+                       class="flex-1 p-2 border rounded focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                <button type="submit"
+                        class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors">
+                    添加
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 学习区域 -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">单词学习</h2>
+        <div class="flex space-x-4 mb-4">
+            <button id="randomWordBtn"
+                    class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-colors">
+                随机单词
+            </button>
+        </div>
+        <div id="learningArea" class="hidden">
+            <div class="text-center p-8 border rounded-lg bg-gray-50">
+                <h3 id="currentWord" class="text-2xl font-bold mb-2"></h3>
+                <p id="currentMeaning" class="text-lg text-gray-600 mb-4"></p>
+                <div class="flex justify-center space-x-4">
+                    <button id="knownBtn"
+                            class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-colors">
+                        已掌握
+                    </button>
+                    <button id="unknownBtn"
+                            class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition-colors">
+                        未掌握
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 词库列表 -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4">词库列表</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">单词</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含义</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">遗忘次数</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                </tr>
+                </thead>
+                <tbody id="wordList" class="bg-white divide-y divide-gray-200">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+        // 初始化数据
+        let words = JSON.parse(localStorage.getItem('words') || '[]');
+        updateWordCount();
+        renderWordList();
+
+        // 添加新单词
+        document.getElementById('addWordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const wordInput = document.getElementById('wordInput');
+            const meaningInput = document.getElementById('meaningInput');
+
+            if (wordInput.value && meaningInput.value) {
+                words.push({
+                    word: wordInput.value,
+                    meaning: meaningInput.value,
+                    forgottenCount: 0
+                });
+                saveWords();
+                wordInput.value = '';
+                meaningInput.value = '';
+                updateWordCount();
+                renderWordList();
+            }
+        });
+
+        // 随机单词按钮
+        document.getElementById('randomWordBtn').addEventListener('click', function() {
+            if (words.length === 0) {
+                alert('词库为空，请先添加单词！');
+                return;
+            }
+
+            const learningArea = document.getElementById('learningArea');
+            learningArea.classList.remove('hidden');
+
+            const randomIndex = Math.floor(Math.random() * words.length);
+            const currentWord = words[randomIndex];
+
+            document.getElementById('currentWord').textContent = currentWord.word;
+            document.getElementById('currentMeaning').textContent = currentWord.meaning;
+
+            // 存储当前单词索引
+            learningArea.dataset.currentIndex = randomIndex;
+        });
+
+        // 已掌握按钮
+        document.getElementById('knownBtn').addEventListener('click', nextWord);
+
+        // 未掌握按钮
+        document.getElementById('unknownBtn').addEventListener('click', function() {
+            const learningArea = document.getElementById('learningArea');
+            const currentIndex = parseInt(learningArea.dataset.currentIndex);
+            words[currentIndex].forgottenCount++;
+            saveWords();
+            renderWordList();
+            nextWord();
+        });
+
+        // 更新单词数量显示
+        function updateWordCount() {
+            document.getElementById('wordCount').textContent = words.length;
+        }
+
+        // 保存到 localStorage
+        function saveWords() {
+            localStorage.setItem('words', JSON.stringify(words));
+        }
+
+        // 渲染单词列表
+        function renderWordList() {
+            const wordList = document.getElementById('wordList');
+            wordList.innerHTML = '';
+
+            // 按遗忘次数降序排序
+            words.sort((a, b) => b.forgottenCount - a.forgottenCount);
+
+            words.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${item.word}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${item.meaning}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${item.forgottenCount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button onclick="deleteWord(${index})"
+                                class="text-red-600 hover:text-red-900">删除</button>
+                    </td>
+                `;
+                wordList.appendChild(row);
+            });
+        }
+
+        // 删除单词
+        function deleteWord(index) {
+            if (confirm('确定要删除这个单词吗？')) {
+                words.splice(index, 1);
+                saveWords();
+                updateWordCount();
+                renderWordList();
+            }
+        }
+
+        // 下一个随机单词
+        function nextWord() {
+            const learningArea = document.getElementById('learningArea');
+            learningArea.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

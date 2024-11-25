@@ -6,6 +6,10 @@
     <title>个人记录</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+        :root {
+            --wechat-green: #07C160;
+            --wechat-light-green: #f0fff5;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
         }
@@ -13,42 +17,28 @@
             transition: transform 0.3s ease;
         }
         .nav-link {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
             padding-left: 12px;
         }
         .nav-link.active {
-            color: #4F46E5;
-        }
-        .nav-link.active::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 12px;
-            background-color: #4F46E5;
-            border-radius: 1px;
+            color: var(--wechat-green);
+            background-color: var(--wechat-light-green);
+            border-radius: 4px;
         }
         .sub-link {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
             padding-left: 12px;
+            margin-left: 12px;
         }
         .sub-link.active {
-            color: #4F46E5;
+            color: var(--wechat-green);
+            background-color: var(--wechat-light-green);
+            border-radius: 4px;
         }
-        .sub-link.active::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 2px;
-            height: 8px;
-            background-color: #4F46E5;
-            border-radius: 1px;
+        .hover-green:hover {
+            color: var(--wechat-green);
         }
         @media (max-width: 768px) {
             .sidebar.closed {
@@ -78,29 +68,29 @@
             <nav class="space-y-8">
                 <div>
                     <h2 class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-4">导航</h2>
-                    <ul class="space-y-3" id="navLinks">
+                    <ul class="space-y-1" id="navLinks">
                         <li>
-                            <a href="#intro" class="nav-link block text-sm text-gray-600 hover:text-indigo-600">首页</a>
+                            <a href="#intro" class="nav-link block text-sm text-gray-600 hover:text-[#07C160] p-2">首页</a>
                         </li>
-                        <li class="space-y-3">
-                            <a href="#works" class="nav-link block text-sm text-gray-600 hover:text-indigo-600">作品展示</a>
-                            <ul class="ml-4 mt-2 space-y-2">
+                        <li class="space-y-1 mt-1">
+                            <a href="#works" class="nav-link block text-sm text-gray-600 hover:text-[#07C160] p-2">作品展示</a>
+                            <ul class="mt-1 space-y-1">
                                 <li>
-                                    <a href="#work1" class="sub-link block text-sm text-gray-500 hover:text-indigo-600">个人博客系统</a>
+                                    <a href="#work1" class="sub-link block text-sm text-gray-500 hover:text-[#07C160] p-2">个人博客系统</a>
                                 </li>
                                 <li>
-                                    <a href="#work2" class="sub-link block text-sm text-gray-500 hover:text-indigo-600">数据可视化平台</a>
+                                    <a href="#work2" class="sub-link block text-sm text-gray-500 hover:text-[#07C160] p-2">数据可视化平台</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="space-y-3">
-                            <a href="#notes" class="nav-link block text-sm text-gray-600 hover:text-indigo-600">学习笔记</a>
-                            <ul class="ml-4 mt-2 space-y-2">
+                        <li class="space-y-1 mt-1">
+                            <a href="#notes" class="nav-link block text-sm text-gray-600 hover:text-[#07C160] p-2">学习笔记</a>
+                            <ul class="mt-1 space-y-1">
                                 <li>
-                                    <a href="#note1" class="sub-link block text-sm text-gray-500 hover:text-indigo-600">前端开发思考</a>
+                                    <a href="#note1" class="sub-link block text-sm text-gray-500 hover:text-[#07C160] p-2">前端开发思考</a>
                                 </li>
                                 <li>
-                                    <a href="#note2" class="sub-link block text-sm text-gray-500 hover:text-indigo-600">设计系统构建</a>
+                                    <a href="#note2" class="sub-link block text-sm text-gray-500 hover:text-[#07C160] p-2">设计系统构建</a>
                                 </li>
                             </ul>
                         </li>
@@ -114,13 +104,13 @@
                         <li>
                             <a href="#note1" class="block group">
                                 <time class="text-xs text-gray-400">2024.03.15</time>
-                                <p class="text-sm text-gray-600 group-hover:text-indigo-600 transition-colors">前端开发的新思考</p>
+                                <p class="text-sm text-gray-600 hover:text-[#07C160]">前端开发的新思考</p>
                             </a>
                         </li>
                         <li>
                             <a href="#note2" class="block group">
                                 <time class="text-xs text-gray-400">2024.03.01</time>
-                                <p class="text-sm text-gray-600 group-hover:text-indigo-600 transition-colors">设计系统的构建经验</p>
+                                <p class="text-sm text-gray-600 hover:text-[#07C160]">设计系统的构建经验</p>
                             </a>
                         </li>
                     </ul>
@@ -131,7 +121,6 @@
 
     <!-- 主要内容区 -->
     <main class="md:ml-64 min-h-screen">
-        <!-- 内容部分与之前相同 -->
         <section id="intro" class="px-8 md:px-16 py-16">
             <div class="max-w-3xl">
                 <h1 class="text-4xl font-medium text-gray-900 mb-6">Hello, World</h1>
@@ -182,79 +171,62 @@
                 </div>
             </div>
         </section>
-         <section id="notes" class="px-8 md:px-16 py-16">
-            <div class="max-w-3xl">
-                <h2 class="text-2xl font-medium text-gray-900 mb-8">学习笔记2</h2>
-                <div class="space-y-16">
-                    <article id="note1" class="space-y-4">
-                        <time class="text-sm text-gray-400">2024.03.15</time>
-                        <h3 class="text-xl font-medium text-gray-900">现代前端开发的思考</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            探索现代前端开发的新范式，从组件设计到状态管理，记录在实际项目中的经验与思考。
-                        </p>
-                    </article>
-
-                    <article id="note2" class="space-y-4">
-                        <time class="text-sm text-gray-400">2024.03.01</time>
-                        <h3 class="text-xl font-medium text-gray-900">设计系统的构建经验</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            关于如何构建一个可扩展的设计系统，以及在团队协作中的实践经验。
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
-         <section id="notes" class="px-8 md:px-16 py-16">
-            <div class="max-w-3xl">
-                <h2 class="text-2xl font-medium text-gray-900 mb-8">学习笔记3</h2>
-                <div class="space-y-16">
-                    <article id="note1" class="space-y-4">
-                        <time class="text-sm text-gray-400">2024.03.15</time>
-                        <h3 class="text-xl font-medium text-gray-900">现代前端开发的思考</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            探索现代前端开发的新范式，从组件设计到状态管理，记录在实际项目中的经验与思考。
-                        </p>
-                    </article>
-
-                    <article id="note2" class="space-y-4">
-                        <time class="text-sm text-gray-400">2024.03.01</time>
-                        <h3 class="text-xl font-medium text-gray-900">设计系统的构建经验</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            关于如何构建一个可扩展的设计系统，以及在团队协作中的实践经验。
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
     </main>
 
     <script>
-        // 处理滚动监听和高亮
-        const sections = document.querySelectorAll('section, section > div[id]');
+        // 处理导航链接点击和滚动监听
         const navLinks = document.querySelectorAll('.nav-link, .sub-link');
+        const sections = document.querySelectorAll('section, section > div[id]');
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
-        };
-
-        function updateActiveLink(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${id}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
+        // 移除所有激活状态
+        function removeAllActive() {
+            navLinks.forEach(link => link.classList.remove('active'));
         }
 
-        const observer = new IntersectionObserver(updateActiveLink, observerOptions);
-        sections.forEach(section => observer.observe(section));
+        // 设置激活状态
+        function setActiveLink(hash) {
+            removeAllActive();
+            const targetLink = document.querySelector(`a[href="${hash}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+        }
+
+        // 点击事件处理
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                removeAllActive();
+                link.classList.add('active');
+            });
+        });
+
+        // 滚动监听
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -75%',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveLink(`#${entry.target.id}`);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            if (section.id) {
+                observer.observe(section);
+            }
+        });
+
+        // 初始化激活状态
+        if (window.location.hash) {
+            setActiveLink(window.location.hash);
+        } else {
+            setActiveLink('#intro');
+        }
 
         // 移动端菜单
         const menuBtn = document.getElementById('menuBtn');

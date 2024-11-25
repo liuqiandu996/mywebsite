@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人记录</title>
-    <!-- 使用 Tailwind 官方 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* 使用系统字体栈 */
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "微软雅黑", sans-serif;
         }
         .font-en {
-            font-family: 'Poppins', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         .hover-up {
             transition: transform 0.3s ease;
@@ -23,14 +21,13 @@
         }
     </style>
 </head>
-<!-- 其余代码保持不变 -->
-<body class="bg-neutral-50 selection:bg-teal-200">
+<body class="bg-gray-50">
     <!-- 导航栏 -->
-    <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="flex justify-between items-center h-20">
-                <a href="#" class="font-en text-xl tracking-wide text-gray-900">PORTFOLIO.</a>
-                <div class="flex gap-12 text-sm">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="font-en text-xl font-medium text-gray-900">PORTFOLIO</a>
+                <div class="flex space-x-12">
                     <a href="#works" class="text-gray-600 hover:text-gray-900">作品</a>
                     <a href="#notes" class="text-gray-600 hover:text-gray-900">笔记</a>
                 </div>
@@ -39,12 +36,12 @@
     </nav>
 
     <!-- 主页面 -->
-    <main class="pt-32">
+    <main class="pt-24">
         <!-- 头部区域 -->
-        <section class="max-w-5xl mx-auto px-6 mb-32">
+        <section class="max-w-5xl mx-auto px-6 mb-24">
             <div class="max-w-2xl">
-                <h1 class="text-5xl font-light text-gray-900 leading-tight mb-8">
-                    设计与代码，<br>创造可能
+                <h1 class="text-4xl md:text-5xl font-medium text-gray-900 leading-tight mb-6">
+                    用设计与代码<br>创造可能
                 </h1>
                 <p class="text-lg text-gray-600 leading-relaxed">
                     记录我的设计思考与技术探索，分享创作过程中的点滴心得。
@@ -53,42 +50,42 @@
         </section>
 
         <!-- 作品区域 -->
-        <section id="works" class="max-w-5xl mx-auto px-6 mb-32">
-            <h2 class="text-lg font-medium mb-12 text-gray-900">精选作品</h2>
-            <div class="grid grid-cols-1 gap-8">
-                <a href="/work-1" class="hover-up block bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div class="flex items-start justify-between mb-8">
+        <section id="works" class="max-w-5xl mx-auto px-6 mb-24">
+            <h2 class="text-xl font-medium mb-8 text-gray-900">作品展示</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <a href="/work-1" class="block bg-white rounded-lg p-6 md:p-8 shadow hover:shadow-lg transition-shadow">
+                    <div class="flex items-start justify-between mb-6">
                         <div>
-                            <h3 class="text-2xl font-medium text-gray-900 mb-2">个人博客系统</h3>
+                            <h3 class="text-xl font-medium text-gray-900 mb-2">个人博客系统</h3>
                             <p class="text-gray-600">基于 Next.js 开发的现代化博客平台</p>
                         </div>
-                        <span class="text-sm text-gray-400 font-en">01</span>
+                        <span class="text-sm text-gray-400">01</span>
                     </div>
-                    <div class="aspect-[16/9] bg-gray-100 rounded-lg"></div>
+                    <div class="aspect-video bg-gray-100 rounded-lg"></div>
                 </a>
 
-                <a href="/work-2" class="hover-up block bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div class="flex items-start justify-between mb-8">
+                <a href="/work-2" class="block bg-white rounded-lg p-6 md:p-8 shadow hover:shadow-lg transition-shadow">
+                    <div class="flex items-start justify-between mb-6">
                         <div>
-                            <h3 class="text-2xl font-medium text-gray-900 mb-2">数据可视化平台</h3>
+                            <h3 class="text-xl font-medium text-gray-900 mb-2">数据可视化平台</h3>
                             <p class="text-gray-600">企业级数据分析与可视化解决方案</p>
                         </div>
-                        <span class="text-sm text-gray-400 font-en">02</span>
+                        <span class="text-sm text-gray-400">02</span>
                     </div>
-                    <div class="aspect-[16/9] bg-gray-100 rounded-lg"></div>
+                    <div class="aspect-video bg-gray-100 rounded-lg"></div>
                 </a>
             </div>
         </section>
 
         <!-- 笔记区域 -->
-        <section id="notes" class="bg-white py-32">
+        <section id="notes" class="bg-white py-24">
             <div class="max-w-5xl mx-auto px-6">
-                <h2 class="text-lg font-medium mb-12 text-gray-900">最新笔记</h2>
-                <div class="grid gap-12">
-                    <article class="group">
-                        <a href="/note-1" class="grid md:grid-cols-[2fr,3fr] gap-8 items-start">
+                <h2 class="text-xl font-medium mb-8 text-gray-900">最新笔记</h2>
+                <div class="space-y-12">
+                    <article>
+                        <a href="/note-1" class="group grid md:grid-cols-[2fr,3fr] gap-6 md:gap-12">
                             <div>
-                                <time class="text-sm text-gray-400 font-en block mb-4">2024.03.15</time>
+                                <time class="text-sm text-gray-400 block mb-2">2024.03.15</time>
                                 <h3 class="text-xl font-medium text-gray-900 group-hover:text-gray-600 transition-colors">
                                     现代前端开发的思考
                                 </h3>
@@ -99,10 +96,10 @@
                         </a>
                     </article>
 
-                    <article class="group">
-                        <a href="/note-2" class="grid md:grid-cols-[2fr,3fr] gap-8 items-start">
+                    <article>
+                        <a href="/note-2" class="group grid md:grid-cols-[2fr,3fr] gap-6 md:gap-12">
                             <div>
-                                <time class="text-sm text-gray-400 font-en block mb-4">2024.03.01</time>
+                                <time class="text-sm text-gray-400 block mb-2">2024.03.01</time>
                                 <h3 class="text-xl font-medium text-gray-900 group-hover:text-gray-600 transition-colors">
                                     设计系统的构建经验
                                 </h3>
@@ -118,7 +115,7 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="py-12 bg-gray-50">
+    <footer class="py-12 border-t border-gray-100">
         <div class="max-w-5xl mx-auto px-6">
             <div class="flex justify-between items-center">
                 <p class="text-sm text-gray-400">© 2024</p>

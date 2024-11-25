@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人记录</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+</head>
+<body class="bg-white">
+    <!-- 导航栏 -->
+    <nav class="py-6 border-b border-slate-100">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl font-light text-slate-800">Portfolio</a>
+                <div class="space-x-8">
+                    <a href="#notes" class="text-slate-500 hover:text-slate-800 transition-colors duration-300">记录</a>
+                    <a href="#works" class="text-slate-500 hover:text-slate-800 transition-colors duration-300">作品</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 头部 -->
+    <header class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl font-light mb-6 text-slate-900">个人成长记录</h1>
+            <p class="text-xl text-slate-600 max-w-2xl leading-relaxed">记录学习与创作的点滴，分享个人成长的历程。</p>
+        </div>
+    </header>
+
+    <!-- 记录区域 -->
+    <section id="notes" class="py-20">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-2xl font-light mb-12 text-slate-800">记录</h2>
+            <div class="grid gap-12">
+                <a href="note-1.html" class="block group">
+                    <div class="space-y-4">
+                        <div class="text-sm text-slate-400">2024.03.15</div>
+                        <h3 class="text-xl text-slate-700 group-hover:text-indigo-600 transition-colors duration-300">技术学习与思考</h3>
+                        <p class="text-slate-500 leading-relaxed">关于前端开发的一些思考和最近学习的新技术总结，包括现代化框架的使用心得。</p>
+                    </div>
+                </a>
+                <a href="note-2.html" class="block group">
+                    <div class="space-y-4">
+                        <div class="text-sm text-slate-400">2024.02.28</div>
+                        <h3 class="text-xl text-slate-700 group-hover:text-indigo-600 transition-colors duration-300">项目管理方法论</h3>
+                        <p class="text-slate-500 leading-relaxed">整理了个人在项目管理中的一些经验，以及如何提高团队协作效率。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品区域 -->
+    <section id="works" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-2xl font-light mb-12 text-slate-800">作品</h2>
+            <div class="grid gap-8 md:grid-cols-2">
+                <a href="work-1.html" class="block">
+                    <div class="bg-white p-8 hover:shadow-sm transition duration-300 rounded-sm border border-slate-100">
+                        <h3 class="text-lg mb-3 text-slate-700 group-hover:text-indigo-600">个人博客系统</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">基于React开发的简约风格博客，专注于内容呈现与阅读体验。</p>
+                    </div>
+                </a>
+                <a href="work-2.html" class="block">
+                    <div class="bg-white p-8 hover:shadow-sm transition duration-300 rounded-sm border border-slate-100">
+                        <h3 class="text-lg mb-3 text-slate-700 group-hover:text-indigo-600">数据可视化平台</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">使用D3.js开发的数据展示系统，让数据更直观易懂。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 border-t border-slate-100">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-sm text-slate-400">© 2024</p>
+        </div>
+    </footer>
+</body>
+</html>

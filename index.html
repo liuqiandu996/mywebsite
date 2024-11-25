@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人记录</title>
-    <!-- 使用正确的 Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.cdnjs.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 使用 Tailwind 官方 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans SC', sans-serif;
@@ -22,16 +23,16 @@
         }
     </style>
 </head>
-<!-- 其余HTML内容保持不变 -->
+<!-- 其余代码保持不变 -->
 <body class="bg-neutral-50 selection:bg-teal-200">
     <!-- 导航栏 -->
-    <nav class="fixed top-0 left-0 right-0 bg-neutral-50/80 backdrop-blur-lg border-b border-neutral-200/50 z-50">
-        <div class="container max-w-5xl mx-auto px-6">
+    <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+        <div class="max-w-5xl mx-auto px-6">
             <div class="flex justify-between items-center h-20">
-                <a href="#" class="font-en text-xl tracking-wide text-neutral-950">PORTFOLIO.</a>
+                <a href="#" class="font-en text-xl tracking-wide text-gray-900">PORTFOLIO.</a>
                 <div class="flex gap-12 text-sm">
-                    <a href="#works" class="text-neutral-600 hover:text-neutral-950">作品</a>
-                    <a href="#notes" class="text-neutral-600 hover:text-neutral-950">笔记</a>
+                    <a href="#works" class="text-gray-600 hover:text-gray-900">作品</a>
+                    <a href="#notes" class="text-gray-600 hover:text-gray-900">笔记</a>
                 </div>
             </div>
         </div>
@@ -40,60 +41,60 @@
     <!-- 主页面 -->
     <main class="pt-32">
         <!-- 头部区域 -->
-        <section class="container max-w-5xl mx-auto px-6 mb-32">
+        <section class="max-w-5xl mx-auto px-6 mb-32">
             <div class="max-w-2xl">
-                <h1 class="text-6xl font-light text-neutral-950 leading-tight mb-8">
+                <h1 class="text-5xl font-light text-gray-900 leading-tight mb-8">
                     设计与代码，<br>创造可能
                 </h1>
-                <p class="text-lg text-neutral-600 leading-relaxed">
+                <p class="text-lg text-gray-600 leading-relaxed">
                     记录我的设计思考与技术探索，分享创作过程中的点滴心得。
                 </p>
             </div>
         </section>
 
         <!-- 作品区域 -->
-        <section id="works" class="container max-w-5xl mx-auto px-6 mb-32">
-            <h2 class="text-lg font-medium mb-12 text-neutral-950">精选作品</h2>
+        <section id="works" class="max-w-5xl mx-auto px-6 mb-32">
+            <h2 class="text-lg font-medium mb-12 text-gray-900">精选作品</h2>
             <div class="grid grid-cols-1 gap-8">
-                <a href="/work-1" class="hover-up block bg-white rounded-2xl p-12 shadow-sm hover:shadow-xl transition-all">
+                <a href="/work-1" class="hover-up block bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300">
                     <div class="flex items-start justify-between mb-8">
                         <div>
-                            <h3 class="text-2xl font-medium text-neutral-950 mb-2">个人博客系统</h3>
-                            <p class="text-neutral-600">基于 Next.js 开发的现代化博客平台</p>
+                            <h3 class="text-2xl font-medium text-gray-900 mb-2">个人博客系统</h3>
+                            <p class="text-gray-600">基于 Next.js 开发的现代化博客平台</p>
                         </div>
-                        <span class="text-sm text-neutral-400 font-en">01</span>
+                        <span class="text-sm text-gray-400 font-en">01</span>
                     </div>
-                    <div class="aspect-[16/9] bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-xl"></div>
+                    <div class="aspect-[16/9] bg-gray-100 rounded-lg"></div>
                 </a>
 
-                <a href="/work-2" class="hover-up block bg-white rounded-2xl p-12 shadow-sm hover:shadow-xl transition-all">
+                <a href="/work-2" class="hover-up block bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300">
                     <div class="flex items-start justify-between mb-8">
                         <div>
-                            <h3 class="text-2xl font-medium text-neutral-950 mb-2">数据可视化平台</h3>
-                            <p class="text-neutral-600">企业级数据分析与可视化解决方案</p>
+                            <h3 class="text-2xl font-medium text-gray-900 mb-2">数据可视化平台</h3>
+                            <p class="text-gray-600">企业级数据分析与可视化解决方案</p>
                         </div>
-                        <span class="text-sm text-neutral-400 font-en">02</span>
+                        <span class="text-sm text-gray-400 font-en">02</span>
                     </div>
-                    <div class="aspect-[16/9] bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-xl"></div>
+                    <div class="aspect-[16/9] bg-gray-100 rounded-lg"></div>
                 </a>
             </div>
         </section>
 
         <!-- 笔记区域 -->
         <section id="notes" class="bg-white py-32">
-            <div class="container max-w-5xl mx-auto px-6">
-                <h2 class="text-lg font-medium mb-12 text-neutral-950">最新笔记</h2>
+            <div class="max-w-5xl mx-auto px-6">
+                <h2 class="text-lg font-medium mb-12 text-gray-900">最新笔记</h2>
                 <div class="grid gap-12">
                     <article class="group">
                         <a href="/note-1" class="grid md:grid-cols-[2fr,3fr] gap-8 items-start">
                             <div>
-                                <time class="text-sm text-neutral-400 font-en block mb-4">2024.03.15</time>
-                                <h3 class="text-xl font-medium text-neutral-950 group-hover:text-neutral-600 transition-colors">
+                                <time class="text-sm text-gray-400 font-en block mb-4">2024.03.15</time>
+                                <h3 class="text-xl font-medium text-gray-900 group-hover:text-gray-600 transition-colors">
                                     现代前端开发的思考
                                 </h3>
                             </div>
-                            <p class="text-neutral-600 leading-relaxed">
-                                探索现代前端开发的新范式，从组件设计到状态管理，记录在实际项目中的经验与思考。包括性能优化策略、工程化实践等多个维度的深入分析。
+                            <p class="text-gray-600 leading-relaxed">
+                                探索现代前端开发的新范式，从组件设计到状态管理，记录在实际项目中的经验与思考。
                             </p>
                         </a>
                     </article>
@@ -101,13 +102,13 @@
                     <article class="group">
                         <a href="/note-2" class="grid md:grid-cols-[2fr,3fr] gap-8 items-start">
                             <div>
-                                <time class="text-sm text-neutral-400 font-en block mb-4">2024.03.01</time>
-                                <h3 class="text-xl font-medium text-neutral-950 group-hover:text-neutral-600 transition-colors">
+                                <time class="text-sm text-gray-400 font-en block mb-4">2024.03.01</time>
+                                <h3 class="text-xl font-medium text-gray-900 group-hover:text-gray-600 transition-colors">
                                     设计系统的构建经验
                                 </h3>
                             </div>
-                            <p class="text-neutral-600 leading-relaxed">
-                                关于如何构建一个可扩展的设计系统，以及在团队协作中的实践经验。讨论设计token、组件封装、文档建设等关键环节。
+                            <p class="text-gray-600 leading-relaxed">
+                                关于如何构建一个可扩展的设计系统，以及在团队协作中的实践经验。
                             </p>
                         </a>
                     </article>
@@ -117,11 +118,11 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="py-12 bg-neutral-50">
-        <div class="container max-w-5xl mx-auto px-6">
+    <footer class="py-12 bg-gray-50">
+        <div class="max-w-5xl mx-auto px-6">
             <div class="flex justify-between items-center">
-                <p class="text-sm text-neutral-400">© 2024</p>
-                <a href="#" class="text-sm text-neutral-600 hover:text-neutral-950">回到顶部</a>
+                <p class="text-sm text-gray-400">© 2024</p>
+                <a href="#" class="text-sm text-gray-600 hover:text-gray-900">回到顶部</a>
             </div>
         </div>
     </footer>
